@@ -32,6 +32,10 @@ export class GildedRose {
     return name === "Aged Brie";
   }
 
+  isConjured(name: string) {
+    return name === "Conjured Mana Cake";
+  }
+
   isBackStagePass(name: string) {
     return name === "Backstage passes to a TAFKAL80ETC concert";
   }
@@ -55,7 +59,12 @@ export class GildedRose {
       }
     } else {
       if (!this.isSulfuras(item.name) && item.quality > 0) {
-        this.decreaseQuality(item);
+        if (this.isConjured(item.name)) {
+          this.decreaseQuality(item);
+          this.decreaseQuality(item);
+        } else {
+          this.decreaseQuality(item);
+        }
       }
     }
   }
