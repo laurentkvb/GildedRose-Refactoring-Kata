@@ -60,27 +60,30 @@ export class GildedRose {
     }
   }
 
+  adjustSellIn(item: Item) {
+    if (!this.isSulfuras(item.name)) {
+      item.sellIn = item.sellIn - 1;
+    }
+
+    if (item.sellIn < 0) {
+      if (!this.isAgedBrie(item.name)) {
+        if (!this.isBackStagePass(item.name)) {
+          if (item.quality > 0 && !this.isSulfuras(item.name)) {
+            this.decreaseQuantity(item);
+          }
+        } else {
+          item.quality = item.quality - item.quality;
+        }
+      } else if (item.quality < 50) {
+        this.increaseQuantity(item);
+      }
+    }
+  }
+
   updateQuality() {
     for (const item of this.items) {
       this.adjustQuality(item);
-
-      if (!this.isSulfuras(item.name)) {
-        item.sellIn = item.sellIn - 1;
-      }
-
-      if (item.sellIn < 0) {
-        if (!this.isAgedBrie(item.name)) {
-          if (!this.isBackStagePass(item.name)) {
-            if (item.quality > 0 && !this.isSulfuras(item.name)) {
-              this.decreaseQuantity(item);
-            }
-          } else {
-            item.quality = item.quality - item.quality;
-          }
-        } else if (item.quality < 50) {
-          this.increaseQuantity(item);
-        }
-      }
+      this.adjustSellIn(item);
     }
 
     return this.items;
