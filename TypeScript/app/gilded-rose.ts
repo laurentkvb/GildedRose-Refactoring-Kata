@@ -39,23 +39,23 @@ export class GildedRose {
     return name === "Sulfuras, Hand of Ragnaros";
   }
 
-  decreaseQuantity(item: Item) {
+  decreaseQuality(item: Item) {
     item.quality = item.quality - 1;
   }
 
-  increaseQuantity(item: Item) {
+  increaseQuality(item: Item) {
     item.quality = item.quality + 1;
   }
 
   adjustQuality(item: Item) {
     if (this.isAgedBrie(item.name) || this.isBackStagePass(item.name)) {
       if (item.quality < 50) {
-        this.increaseQuantity(item);
+        this.increaseQuality(item);
         this.handleBackstagePasses(item);
       }
     } else {
       if (!this.isSulfuras(item.name) && item.quality > 0) {
-        this.decreaseQuantity(item);
+        this.decreaseQuality(item);
       }
     }
   }
@@ -68,14 +68,14 @@ export class GildedRose {
     if (item.sellIn < 0) {
       if (this.isAgedBrie(item.name)) {
         if (item.quality < 50) {
-          this.increaseQuantity(item);
+          this.increaseQuality(item);
         }
       } else {
         if (this.isBackStagePass(item.name)) {
           item.quality = item.quality - item.quality;
         } else {
           if (item.quality > 0 && !this.isSulfuras(item.name)) {
-            this.decreaseQuantity(item);
+            this.decreaseQuality(item);
           }
         }
       }
