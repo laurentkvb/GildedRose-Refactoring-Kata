@@ -86,4 +86,21 @@ describe("Gilded Rose", () => {
     gildedRose.updateQuality(); // 4 days left
     expect(items[0].quality).toBe(27);
   });
+
+  it("should process conjured items", () => {
+    const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 3, 6)]);
+
+    // 2 sellin value
+    let items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(4);
+    // 1 sellin value
+    gildedRose.updateQuality();
+    expect(items[0].quality).toBe(2);
+    // 0 sellin value
+    gildedRose.updateQuality();
+    expect(items[0].quality).toBe(0);
+    // 0 sellin value
+    gildedRose.updateQuality();
+    expect(items[0].quality).toBe(0);
+  });
 });
