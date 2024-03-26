@@ -17,6 +17,17 @@ export class GildedRose {
     this.items = items;
   }
 
+  handleBackstagePasses(item: Item) {
+    if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+      if (item.sellIn < 11 && item.quality < 50) {
+        item.quality = item.quality + 1;
+      }
+      if (item.sellIn < 6 && item.quality < 50) {
+        item.quality = item.quality + 1;
+      }
+    }
+  }
+
   updateQuality() {
     for (const item of this.items) {
       if (
@@ -29,15 +40,7 @@ export class GildedRose {
       } else {
         if (item.quality < 50) {
           item.quality = item.quality + 1;
-
-          if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-            if (item.sellIn < 11 && item.quality < 50) {
-              item.quality = item.quality + 1;
-            }
-            if (item.sellIn < 6 && item.quality < 50) {
-              item.quality = item.quality + 1;
-            }
-          }
+          this.handleBackstagePasses(item);
         }
       }
       // IF 2 - item.name
